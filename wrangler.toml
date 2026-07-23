@@ -1,5 +1,5 @@
 name = "github-cron-dispatcher"
-main = "src/index.js"
+main = "worker.js"
 compatibility_date = "2024-12-01"
 
 # ==================================================

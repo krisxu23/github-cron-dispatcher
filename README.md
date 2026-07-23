@@ -54,7 +54,7 @@ on:
 ### 方式一：Cloudflare Dashboard（推荐新手）
 
 1. 登录 [Cloudflare Dashboard](https://dash.cloudflare.com/) → **Workers & Pages**
-2. 创建 Worker → 将 `src/index.js` 代码粘贴到编辑器
+2. 创建 Worker → 将 `worker.js` 代码粘贴到编辑器
 3. **设置 → 变量** 添加：
    - `GITHUB_TOKEN` → 类型选 **机密**，值填你的 PAT
    - `TARGETS` → 类型选 **纯文本**，值填目标仓库列表
