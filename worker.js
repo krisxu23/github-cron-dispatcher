@@ -1,5 +1,9 @@
 export default {
   async fetch(request, env, ctx) {
+    const url = new URL(request.url);
+    if (url.searchParams.get('key') !== env.CRON_SECRET) {
+      return new Response('Unauthorized', { status: 401 });
+    }
     const result = await triggerDispatches(env);
     return new Response(JSON.stringify(result, null, 2), {
       headers: { "Content-Type": "application/json" }

@@ -38,6 +38,12 @@ krisxu23/Keepalive
 
 以 `#` 开头的行会被忽略。
 
+### `CRON_SECRET`（机密，可选）
+
+手动通过 HTTP 触发时需传入的鉴权密钥。设置后，访问 Worker URL 必须携带 `?key=你设定的值` 才会触发分发，防止被爬虫滥用。
+
+不设置时 `fetch` 直接返回 401，不影响 `scheduled()` 定时触发。
+
 ## GitHub YAML 配置
 
 **每个目标仓库的 workflow 必须监听 `repository_dispatch` 事件**：
@@ -58,6 +64,7 @@ on:
 3. **设置 → 变量** 添加：
    - `GITHUB_TOKEN` → 类型选 **机密**，值填你的 PAT
    - `TARGETS` → 类型选 **纯文本**，值填目标仓库列表
+   - `CRON_SECRET` → 类型选 **机密**，手动触发用的鉴权密钥（可选）
 4. **设置 → 触发器 → Cron 触发器** 添加定时规则（如 `40 2,8,14,20 * * *`）
 
 ### 方式二：Wrangler CLI
@@ -85,7 +92,11 @@ wrangler deploy
 
 ## 手动测试
 
-部署后访问 Worker URL（如 `https://github-cron-dispatcher.xxx.workers.dev`）即可手动触发一次并查看 JSON 结果：
+部署后访问 Worker URL 并传入 `key` 参数即可手动触发一次并查看 JSON 结果：
+
+```
+https://github-cron-dispatcher.xxx.workers.dev?key=你的CRON_SECRET
+```
 
 ```json
 [
